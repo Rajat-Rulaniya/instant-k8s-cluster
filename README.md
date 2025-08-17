@@ -70,7 +70,7 @@ This script will:
 
 Then run the below command for validation:
 ```bash
-kubectl get nodes;
+kubectl get nodes
 ```
 
 ---
@@ -92,7 +92,7 @@ root
 * 📁 **scripts/** → scripts executed on control plane & worker nodes
 * 📜 **create\_cluster.sh** → creates the cluster
 * 📜 **destroy\_cluster.sh** → deletes the cluster
-* 📜 **update\_kubeconfig.sh** → updates kubeconfig on reboot
+* 📜 **update\_kubeconfig.sh** → updates local kubeconfig file to interact with apiserver
 
 ---
 
@@ -101,14 +101,20 @@ root
 The cluster is **fully configurable** 🎛️
 
 * **Update Kubernetes version** → edit `K8S_VERSION` in `scripts/base.sh`
+
 * **Change worker node count** → edit `total_worker_instances` in `terraform/variables.tf`
+
 * **Change instance type** → edit `controlplane_instance_type` and `worker_instance_type` in `terraform/variables.tf`
+
 * **SSH access to control plane and worker node**
   * Control plane SSH → update `ssh_from_ip` in `terraform/variables.tf`
+
   * Worker node SSH → update `my_ip_cidr` in the `locals` block of `terraform/variables.tf`
+
 * **API server communication access (port 6443)** → update `my_ip_cidr` in the `locals` block of `terraform/variables.tf`
 
 Tip: You can adjust security group rules later in the AWS Console, but making changes via Terraform variables keeps the setup reproducible and automated.
+
 
 ### SSH Keys
 
