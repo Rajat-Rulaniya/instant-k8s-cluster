@@ -7,13 +7,13 @@ No manual setup — everything automated using **Terraform + Ansible + Bash**.
 
 
 ### 📑 Navigation
-- [⚙️ Pre-Requisites](#pre-requisites)
-- [▶️ Running Cluster](#️running-cluster)
-- [📂 Folder Structure](#folder-structure)
-- [🔧 Configuring Cluster (dynamically)](#configuring-cluster-dynamically)
-- [♻️ What if Control Plane Restarts](#️what-if-control-plane-restarts)
-- [🗑️ Deleting Cluster](#️deleting-cluster)
-- [📝 Minor details](#minor-details)
+- [Pre-Requisites](#pre-requisites)
+ - [Running Cluster](#running-cluster)
+- [Folder Structure](#folder-structure)
+- [Configuring Cluster (dynamically)](#configuring-cluster-dynamically)
+ - [What if Control Plane Restarts](#what-if-control-plane-restarts)
+ - [Deleting Cluster](#deleting-cluster)
+- [Minor details](#minor-details)
 
 ---
 
@@ -36,17 +36,29 @@ Running your cluster is super simple:
 
 1. Configure AWS CLI:  
 
-   ```bash
-   aws configure
-   ```
+    ```bash
+    aws configure
+    ```
 
-Provide your **Access Key ID** & **Secret Access Key**.
+   Provide your **Access Key ID** & **Secret Access Key**.
 
-2. From the **root folder**, run:
+2. Change into the project directory:
 
-   ```bash
-   ./create_cluster.sh
-   ```
+    ```bash
+    cd instant-k8s-cluster
+    ```
+
+3. Make the shell scripts executable (one-time):
+
+    ```bash
+    chmod +x ./*.sh
+    ```
+
+4. From the **root folder**, run:
+
+    ```bash
+    ./create_cluster.sh
+    ```
 
 That’s it ✅
 This script will:
@@ -58,8 +70,8 @@ This script will:
 
 Then run the below command for validation:
 ```bash
-    kubectl get nodes;
-````
+kubectl get nodes;
+```
 
 ---
 
@@ -170,10 +182,31 @@ If you prefer **auto-delete without confirmation**:
 ## Minor details
 
 1. Re-running `create_cluster.sh` is safe: it checks Terraform state and exits if the cluster already exists, avoiding duplicate provisioning.
+
+<br>
+
 2. Worker nodes auto-join the control plane using a dynamically generated `joinNodes.sh` script (rendered by Ansible).
+
+<br>
+
 3. Ansible inventory is generated after Terraform creates resources. To change the number of worker nodes, update `variables.tf`; the workflow handles it automatically.
+
+<br>
+
 4. Playbooks aren’t fully idempotent because they execute Bash scripts on the control plane and worker nodes.
-5. Terraform provisions resources in the default VPC. For stronger isolation, add Terraform networking for a dedicated VPC, subnets, and security groups, (For basic setup the deafult one is fine)
+
+<br>
+
+5. Terraform provisions resources in the default VPC. For stronger isolation, add Terraform networking for a dedicated VPC, subnets, and security groups, (For basic setup the default one is fine)
+
+<br>
+
 6. `update_kubeconfig.sh` relies on the control plane instance’s `Name` tag. If you change the name in `terraform/compute.tf`, update the script accordingly. (Recommended: Don't change the Name tag of control plane instance at all)
+
+<br>
+
 7. `on_restart.sh` is installed on the control plane as a systemd service and runs on every reboot to refresh the API server certificate and kubeconfig.
+
+<br>
+
 8. The current setup uses Flannel CNI
