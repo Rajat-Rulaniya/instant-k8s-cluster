@@ -14,11 +14,6 @@ if terraform state list 2> /dev/null | grep -q .; then
     exit 0
 fi
 
-# if [ -f terraform.tfstate ] && ! grep -q '"resources": \[\]' terraform.tfstate; then
-#     printf "[INFO] Cluster already running, first delete using -> ./destroy_cluster.sh -y\n"
-#     exit 0
-# fi
-
 printf "🚀 Starting Terraform Provisioning.......\n\n"
 
 terraform apply -auto-approve
