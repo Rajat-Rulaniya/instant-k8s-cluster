@@ -1,5 +1,8 @@
 #!/bin/bash
 
+mkdir -p ~/.kube/ ## to create config will will it be idempotent?
+touch ~/.kube/config
+
 read controlplane_public_ip controlplane_private_ip < <(
     aws ec2 describe-instances \
         --filters "Name=tag:Name,Values=control-plane" "Name=instance-state-name,Values=running" \

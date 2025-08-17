@@ -26,7 +26,8 @@ Before running the cluster, make sure you have:
 3. Terraform installed  
 4. Ansible installed  
 5. AWS Access Keys created for your user  
-6. Private/Public SSH keys setup ([See SSH Keys section](#ssh-keys))  
+6. Private/Public SSH keys setup ([See SSH Keys section](#ssh-keys))
+7. Kubectl binary is installed
 
 ---
 
