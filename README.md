@@ -187,7 +187,7 @@ If you prefer **auto-delete without confirmation**:
 
 ## Minor details
 
-1. Re-running `create_cluster.sh` is safe: it checks Terraform state and exits if the cluster already exists, avoiding duplicate provisioning.
+1. Re-running `create_cluster.sh` is safe: it checks Terraform state and exits if the cluster already exists, avoiding duplicate provisioning. Also there is no need for `terraform init`, the script auto handles it.
 
 <br>
 
@@ -215,4 +215,8 @@ If you prefer **auto-delete without confirmation**:
 
 <br>
 
-8. The current setup uses Flannel CNI
+8. The current setup uses Flannel CNI.
+
+<br>
+
+9. Update `terraform/backend.tf` to use remote backend for state management.
