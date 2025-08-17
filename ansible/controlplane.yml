@@ -1,0 +1,28 @@
+---
+- name: Configure Controlplane
+  hosts: controlplane
+  tasks:
+    - name: Copy base.sh, master.sh and on_restart.sh
+      copy:
+        src: "{{ item }}"
+        dest: "/home/ubuntu/{{ item | basename}}"
+        mode: '0755'
+      loop: 
+        - ../scripts/base.sh
+        - ../scripts/controlplane.sh
+        - ../scripts/on_restart.sh
+        
+
+    - name: Run scripts
+      shell: "/home/ubuntu/{{ item }}"
+      args:
+        chdir: /home/ubuntu/
+      loop: 
+        - base.sh
+        - controlplane.sh
+    
+    - name: Get join Script
+      fetch:
+        src: /home/ubuntu/joinNodes.sh
+        dest: ../scripts/
+        flat: yes

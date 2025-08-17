@@ -1,0 +1,23 @@
+---
+- name: Configure Workers
+  hosts: workers
+  tasks:
+    - name: Copy base.sh and joinNodes.sh
+      copy:
+        src: "{{ item }}"
+        dest: "/home/ubuntu/{{ item | basename}}"
+        mode: '0755'
+      loop: 
+        - ../scripts/base.sh
+        - ../scripts/joinNodes.sh
+
+    - name: Run base.sh
+      shell: /home/ubuntu/base.sh
+      args:
+        chdir: /home/ubuntu/
+
+    - name: Run joinNodes.sh
+      shell: /home/ubuntu/joinNodes.sh
+      args:
+        chdir: /home/ubuntu/
+      

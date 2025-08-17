@@ -1,0 +1,7 @@
+.terraform
+*.tfstate*
+*.pub
+*.pem
+*.ini
+
+joinNodes.sh
