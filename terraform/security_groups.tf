@@ -48,6 +48,12 @@ resource "aws_vpc_security_group_ingress_rule" "ingress_allow_all_traffic_to_wor
   ip_protocol                  = -1
 }
 
+resource "aws_vpc_security_group_ingress_rule" "ingress_worker_to_worker" {
+  security_group_id            = aws_security_group.worker_sg.id
+  referenced_security_group_id = aws_security_group.worker_sg.id
+  ip_protocol                  = -1
+}
+
 resource "aws_vpc_security_group_ingress_rule" "ingress_allow_apiserver_communication" {
   security_group_id = aws_security_group.controlplane_sg.id
   cidr_ipv4         = local.my_ip_cidr
