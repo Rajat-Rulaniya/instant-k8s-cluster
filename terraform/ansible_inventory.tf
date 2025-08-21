@@ -1,6 +1,6 @@
 resource "local_file" "ansible_inventory" {
   content = <<-EOT
-[controlplane]
+[control]
 controlplane ansible_host=${aws_instance.controlplane.public_ip}
 
 [workers]

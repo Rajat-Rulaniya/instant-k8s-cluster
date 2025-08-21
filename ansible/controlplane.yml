@@ -1,6 +1,6 @@
 ---
 - name: Configure Controlplane
-  hosts: controlplane
+  hosts: control
   tasks:
     - name: Copy base.sh, master.sh and on_restart.sh
       copy:
