@@ -1,6 +1,6 @@
 #!/bin/bash
 
-mkdir -p ~/.kube/ ## to create config will will it be idempotent?
+mkdir -p ~/.kube/ ## idempotent
 touch ~/.kube/config
 
 read controlplane_public_ip controlplane_private_ip < <(
